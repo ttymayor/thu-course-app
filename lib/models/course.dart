@@ -154,3 +154,31 @@ class CoursesResponse {
     );
   }
 }
+
+class CourseVersion {
+  final String hash;
+  final String updatedAt;
+  final String version;
+
+  CourseVersion({
+    required this.hash,
+    required this.updatedAt,
+    required this.version,
+  });
+
+  factory CourseVersion.fromJson(Map<String, dynamic> json) {
+    return CourseVersion(
+      hash: json['hash'] ?? '',
+      updatedAt: json['updated_at'] ?? '',
+      version: json['version'] ?? '',
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'hash': hash,
+      'updated_at': updatedAt,
+      'version': version,
+    };
+  }
+}
