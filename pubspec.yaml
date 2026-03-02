@@ -1,0 +1,27 @@
+name: thu_course_app
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.11.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_sign_in: ^6.2.1
+  flutter_dotenv: ^5.1.0
+  http: ^1.2.0
+  loading_indicator_m3e: ^0.1.1
+  m3e_design: ^0.2.1
+  material_new_shapes: ^1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .env
