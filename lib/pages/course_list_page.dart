@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import '../models/course.dart';
-import '../services/course_api_service.dart';
+import '../models/schedule.dart';
+import '../services/schedule_service.dart';
 
 class CourseListPage extends StatefulWidget {
   final List<Course> initialCourses;
   final int totalCount;
+  final VoidCallback? onScheduleChanged;
 
   const CourseListPage({
     super.key,
     required this.initialCourses,
     required this.totalCount,
+    this.onScheduleChanged,
   });
 
   @override
@@ -17,22 +20,92 @@ class CourseListPage extends StatefulWidget {
 }
 
 class _CourseListPageState extends State<CourseListPage> {
+  static const int _pageSize = 10;
+
   final TextEditingController _searchController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  final CourseApiService _apiService = CourseApiService();
+  late Future<ScheduleService> _scheduleServiceFuture;
+  Set<String> _scheduledCourseIds = {};
+  List<ScheduleCourse> _scheduledSlots = [];
 
   List<Course> _allCourses = [];
   List<Course> _filteredCourses = [];
-  int _currentPage = 1;
-  bool _isLoading = false;
-  bool _hasMore = true;
+  int _currentPage = 0;
+
+  int get _totalPages => (_filteredCourses.length / _pageSize).ceil().clamp(1, double.maxFinite.toInt());
+
+  List<Course> get _pagedCourses {
+    final start = _currentPage * _pageSize;
+    final end = (start + _pageSize).clamp(0, _filteredCourses.length);
+    return _filteredCourses.sublist(start, end);
+  }
 
   @override
   void initState() {
     super.initState();
     _allCourses = widget.initialCourses;
     _filteredCourses = widget.initialCourses;
-    _scrollController.addListener(_onScroll);
+    _scheduleServiceFuture = ScheduleService.create();
+    _loadScheduledCourses();
+  }
+
+  Future<void> _loadScheduledCourses() async {
+    final service = await _scheduleServiceFuture;
+    final courses = service.getScheduleCourses();
+    setState(() {
+      _scheduledCourseIds = courses.map((c) => c.courseId).toSet();
+      _scheduledSlots = courses;
+    });
+  }
+
+  bool _hasConflict(Course course) {
+    final newSlots = ScheduleCourse.fromCourse(course);
+    for (final newSlot in newSlots) {
+      for (final existing in _scheduledSlots) {
+        if (newSlot.dayOfWeek == existing.dayOfWeek &&
+            newSlot.startPeriod <= existing.endPeriod &&
+            newSlot.endPeriod >= existing.startPeriod) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  Future<void> _toggleSchedule(Course course) async {
+    final service = await _scheduleServiceFuture;
+    if (_scheduledCourseIds.contains(course.id)) {
+      await service.removeCourse(course.id);
+      setState(() {
+        _scheduledCourseIds.remove(course.id);
+        _scheduledSlots.removeWhere((c) => c.courseId == course.id);
+      });
+      widget.onScheduleChanged?.call();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Removed ${course.courseName} from schedule'),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    } else {
+      await service.addCourse(course);
+      final newSlots = ScheduleCourse.fromCourse(course);
+      setState(() {
+        _scheduledCourseIds.add(course.id);
+        _scheduledSlots.addAll(newSlots);
+      });
+      widget.onScheduleChanged?.call();
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Added ${course.courseName} to schedule'),
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -42,57 +115,33 @@ class _CourseListPageState extends State<CourseListPage> {
     super.dispose();
   }
 
-  void _onScroll() {
-    if (_isLoading || !_hasMore) return;
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 200) {
-      _loadMore();
-    }
-  }
-
-  Future<void> _loadMore() async {
-    if (_isLoading || !_hasMore) return;
-
-    setState(() => _isLoading = true);
-
-    try {
-      _currentPage++;
-      final response = await _apiService.fetchCourses(page: _currentPage);
-
-      setState(() {
-        _allCourses.addAll(response.data);
-        if (_searchController.text.isEmpty) {
-          _filteredCourses = _allCourses;
-        }
-        if (response.data.length < CourseApiService.pageSize) {
-          _hasMore = false;
-        }
-      });
-    } catch (e) {
-      _currentPage--;
-    } finally {
-      setState(() => _isLoading = false);
-    }
-  }
-
   void _filterCourses(String query) {
     setState(() {
-      if (query.isEmpty) {
-        _filteredCourses = _allCourses;
-      } else {
-        _filteredCourses = _allCourses.where((course) {
-          return course.courseName.contains(query) ||
-              course.courseCode.contains(query) ||
-              course.departmentName.contains(query) ||
-              course.teachers.any((t) => t.contains(query));
-        }).toList();
-      }
+      _filteredCourses = query.isEmpty
+          ? _allCourses
+          : _allCourses.where((course) {
+              return course.courseName.contains(query) ||
+                  course.courseCode.contains(query) ||
+                  course.departmentName.contains(query) ||
+                  course.teachers.any((t) => t.contains(query));
+            }).toList();
+      _currentPage = 0;
     });
+  }
+
+  void _goToPage(int page) {
+    setState(() => _currentPage = page);
+    _scrollController.animateTo(
+      0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final paged = _pagedCourses;
 
     return Scaffold(
       appBar: AppBar(
@@ -128,7 +177,7 @@ class _CourseListPageState extends State<CourseListPage> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             color: colorScheme.surfaceContainerHighest,
             child: Text(
-              'Showing: ${_filteredCourses.length} / ${widget.totalCount} courses',
+              'Showing ${_filteredCourses.length} / ${widget.totalCount} courses',
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
@@ -137,18 +186,68 @@ class _CourseListPageState extends State<CourseListPage> {
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
-              itemCount: _filteredCourses.length + (_hasMore ? 1 : 0),
+              itemCount: paged.length,
               itemBuilder: (context, index) {
-                if (index >= _filteredCourses.length) {
-                  return const Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Center(child: CircularProgressIndicator()),
-                  );
-                }
-                final course = _filteredCourses[index];
-                return _CourseCard(course: course);
+                final course = paged[index];
+                final inSchedule = _scheduledCourseIds.contains(course.id);
+                return _CourseCard(
+                  course: course,
+                  isInSchedule: inSchedule,
+                  hasConflict: !inSchedule && _hasConflict(course),
+                  onToggleSchedule: () => _toggleSchedule(course),
+                );
               },
             ),
+          ),
+          _PaginationBar(
+            currentPage: _currentPage,
+            totalPages: _totalPages,
+            onPrev: _currentPage > 0 ? () => _goToPage(_currentPage - 1) : null,
+            onNext: _currentPage < _totalPages - 1 ? () => _goToPage(_currentPage + 1) : null,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PaginationBar extends StatelessWidget {
+  final int currentPage;
+  final int totalPages;
+  final VoidCallback? onPrev;
+  final VoidCallback? onNext;
+
+  const _PaginationBar({
+    required this.currentPage,
+    required this.totalPages,
+    required this.onPrev,
+    required this.onNext,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        border: Border(
+          top: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton.outlined(
+            onPressed: onPrev,
+            icon: const Icon(Icons.chevron_left),
+          ),
+          Text(
+            'Page ${currentPage + 1} of $totalPages',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          IconButton.outlined(
+            onPressed: onNext,
+            icon: const Icon(Icons.chevron_right),
           ),
         ],
       ),
@@ -158,8 +257,16 @@ class _CourseListPageState extends State<CourseListPage> {
 
 class _CourseCard extends StatelessWidget {
   final Course course;
+  final bool isInSchedule;
+  final bool hasConflict;
+  final VoidCallback onToggleSchedule;
 
-  const _CourseCard({required this.course});
+  const _CourseCard({
+    required this.course,
+    required this.isInSchedule,
+    this.hasConflict = false,
+    required this.onToggleSchedule,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -242,8 +349,7 @@ class _CourseCard extends StatelessWidget {
                             Expanded(child: Text(item.method)),
                             Text(
                               '${item.percentage}%',
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold),
+                              style: const TextStyle(fontWeight: FontWeight.bold),
                             ),
                           ],
                         ),
@@ -263,6 +369,23 @@ class _CourseCard extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: double.infinity,
+                  child: isInSchedule
+                      ? OutlinedButton.icon(
+                          onPressed: onToggleSchedule,
+                          icon: const Icon(Icons.remove),
+                          label: const Text('Remove from Schedule'),
+                        )
+                      : FilledButton.icon(
+                          onPressed: hasConflict ? null : onToggleSchedule,
+                          icon: Icon(hasConflict ? Icons.block : Icons.add),
+                          label: Text(hasConflict
+                              ? 'Time Conflict'
+                              : 'Add to Schedule'),
+                        ),
+                ),
               ],
             ),
           ),

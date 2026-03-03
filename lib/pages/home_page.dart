@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/course.dart';
 import '../services/auth_service.dart';
 import 'course_list_page.dart';
+import 'schedule_page.dart';
 import 'settings_page.dart';
 import 'onboarding_page.dart';
 
@@ -26,6 +27,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final AuthService _authService = AuthService();
   int _selectedIndex = 0;
+  int _scheduleVersion = 0;
 
   Future<void> _handleLogout() async {
     await _authService.signOut();
@@ -51,7 +53,11 @@ class _HomePageState extends State<HomePage> {
           CourseListPage(
             initialCourses: widget.initialCourses,
             totalCount: widget.totalCount,
+            onScheduleChanged: () {
+              setState(() => _scheduleVersion++);
+            },
           ),
+          SchedulePage(key: ValueKey(_scheduleVersion)),
           SettingsPage(
             key: ValueKey(widget.themeMode),
             themeMode: widget.themeMode,
@@ -71,6 +77,11 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.school_outlined),
             selectedIcon: Icon(Icons.school),
             label: 'Courses',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.calendar_today_outlined),
+            selectedIcon: Icon(Icons.calendar_today),
+            label: 'Schedule',
           ),
           NavigationDestination(
             icon: Icon(Icons.settings_outlined),

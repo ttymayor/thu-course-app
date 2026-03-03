@@ -1,17 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'pages/onboarding_page.dart';
 import 'pages/home_page.dart';
 import 'pages/loading_page.dart';
+import 'services/auth_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
-  runApp(const MainApp());
+
+  final authService = AuthService();
+  bool loggedIn = false;
+
+  if (await authService.isSessionValid()) {
+    final account = await authService.signInSilently();
+    loggedIn = account != null;
+    if (!loggedIn) await authService.clearSession();
+  }
+
+  runApp(MainApp(loggedIn: loggedIn));
 }
 
 class MainApp extends StatefulWidget {
-  const MainApp({super.key});
+  final bool loggedIn;
+
+  const MainApp({super.key, required this.loggedIn});
 
   @override
   State<MainApp> createState() => _MainAppState();
@@ -44,10 +55,15 @@ class _MainAppState extends State<MainApp> {
         ),
         useMaterial3: true,
       ),
-      home: OnboardingPage(
-        themeMode: _themeMode,
-        onThemeChanged: _handleThemeChanged,
-      ),
+      home: widget.loggedIn
+          ? LoadingPage(
+              themeMode: _themeMode,
+              onThemeChanged: _handleThemeChanged,
+            )
+          : OnboardingPage(
+              themeMode: _themeMode,
+              onThemeChanged: _handleThemeChanged,
+            ),
     );
   }
 
