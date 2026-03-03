@@ -19,12 +19,26 @@ class AuthService {
     );
   }
 
+  static const List<String> _allowedDomains = [
+    'go.thu.edu.tw',
+    'thu.edu.tw',
+  ];
+
   Future<GoogleSignInAccount?> signInWithGoogle() async {
     try {
-      return await _googleSignIn.signIn();
+      final account = await _googleSignIn.signIn();
+      if (account == null) return null;
+
+      final domain = account.email.split('@').last;
+      if (!_allowedDomains.contains(domain)) {
+        await _googleSignIn.signOut();
+        throw Exception('僅限東海大學信箱（@go.thu.edu.tw 或 @thu.edu.tw）登入');
+      }
+
+      return account;
     } catch (error) {
       print('Google Sign-In error: $error');
-      return null;
+      rethrow;
     }
   }
 

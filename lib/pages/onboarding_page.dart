@@ -22,21 +22,29 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   Future<void> _handleGoogleSignIn() async {
     setState(() => _isLoading = true);
-    
-    final user = await _authService.signInWithGoogle();
 
-    if (user != null && mounted) {
-      await _authService.saveSession();
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => LoadingPage(
-            themeMode: widget.themeMode,
-            onThemeChanged: widget.onThemeChanged,
+    try {
+      final user = await _authService.signInWithGoogle();
+
+      if (user != null && mounted) {
+        await _authService.saveSession();
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => LoadingPage(
+              themeMode: widget.themeMode,
+              onThemeChanged: widget.onThemeChanged,
+            ),
           ),
-        ),
-      );
-    } else {
-      setState(() => _isLoading = false);
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString().replaceFirst('Exception: ', ''))),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
