@@ -67,6 +67,28 @@ class Course {
           [],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'course_code': courseCode,
+      'course_name': courseName,
+      'course_description': courseDescription,
+      'academic_year': academicYear,
+      'academic_semester': academicSemester,
+      'course_type': courseType,
+      'credits1': credits1,
+      'credits2': credits2,
+      'department_code': departmentCode,
+      'department_name': departmentName,
+      'teaching_goal': teachingGoal,
+      'is_closed': isClosed,
+      'basic_info': basicInfo.toJson(),
+      'grading_items': gradingItems.map((e) => e.toJson()).toList(),
+      'selection_records': selectionRecords.map((e) => e.toJson()).toList(),
+      'teachers': teachers,
+    };
+  }
 }
 
 class BasicInfo {
@@ -90,6 +112,15 @@ class BasicInfo {
       enrollmentNotes: json['enrollment_notes'] ?? '',
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'class_time': classTime,
+      'target_class': targetClass,
+      'target_grade': targetGrade,
+      'enrollment_notes': enrollmentNotes,
+    };
+  }
 }
 
 class GradingItem {
@@ -109,6 +140,14 @@ class GradingItem {
       percentage: json['percentage'] ?? 0,
       description: json['description'] ?? '',
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'method': method,
+      'percentage': percentage,
+      'description': description,
+    };
   }
 }
 
@@ -132,6 +171,15 @@ class SelectionRecord {
       remaining: json['remaining'] ?? 0,
       registered: json['registered'] ?? 0,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'date': date,
+      'enrolled': enrolled,
+      'remaining': remaining,
+      'registered': registered,
+    };
   }
 }
 

@@ -2,13 +2,16 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
+  static final AuthService _instance = AuthService._internal();
+  factory AuthService() => _instance;
+
   static const String _clientId = String.fromEnvironment('GOOGLE_CLIENT_ID');
   static const String _sessionKey = 'login_timestamp';
   static const int _sessionDays = 30;
 
   late final GoogleSignIn _googleSignIn;
 
-  AuthService() {
+  AuthService._internal() {
     _googleSignIn = GoogleSignIn(
       clientId: _clientId,
       serverClientId: _clientId,

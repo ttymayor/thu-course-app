@@ -38,39 +38,7 @@ class CourseCacheService {
   }
 
   Future<void> saveCourses(List<Course> courses, int count) async {
-    final coursesJson = jsonEncode(courses.map((e) => {
-      'id': e.id,
-      'course_code': e.courseCode,
-      'course_name': e.courseName,
-      'course_description': e.courseDescription,
-      'academic_year': e.academicYear,
-      'academic_semester': e.academicSemester,
-      'course_type': e.courseType,
-      'credits1': e.credits1,
-      'credits2': e.credits2,
-      'department_code': e.departmentCode,
-      'department_name': e.departmentName,
-      'teaching_goal': e.teachingGoal,
-      'is_closed': e.isClosed,
-      'basic_info': {
-        'class_time': e.basicInfo.classTime,
-        'target_class': e.basicInfo.targetClass,
-        'target_grade': e.basicInfo.targetGrade,
-        'enrollment_notes': e.basicInfo.enrollmentNotes,
-      },
-      'grading_items': e.gradingItems.map((g) => {
-        'method': g.method,
-        'percentage': g.percentage,
-        'description': g.description,
-      }).toList(),
-      'selection_records': e.selectionRecords.map((s) => {
-        'date': s.date,
-        'enrolled': s.enrolled,
-        'remaining': s.remaining,
-        'registered': s.registered,
-      }).toList(),
-      'teachers': e.teachers,
-    }).toList());
+    final coursesJson = jsonEncode(courses.map((e) => e.toJson()).toList());
     await _prefs.setString(_coursesKey, coursesJson);
     await _prefs.setInt(_countKey, count);
   }
