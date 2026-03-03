@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/course.dart';
 import '../services/auth_service.dart';
 import 'course_list_page.dart';
+import 'schedule_page.dart';
 import 'settings_page.dart';
 import 'onboarding_page.dart';
 
@@ -26,6 +27,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final AuthService _authService = AuthService();
   int _selectedIndex = 0;
+  int _scheduleVersion = 0;
+  late ThemeMode _themeMode;
+
+  @override
+  void initState() {
+    super.initState();
+    _themeMode = widget.themeMode;
+  }
+
+  void _handleThemeChanged(ThemeMode mode) {
+    setState(() => _themeMode = mode);
+    widget.onThemeChanged(mode);
+  }
 
   Future<void> _handleLogout() async {
     await _authService.signOut();
@@ -33,7 +47,7 @@ class _HomePageState extends State<HomePage> {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (context) => OnboardingPage(
-            themeMode: widget.themeMode,
+            themeMode: _themeMode,
             onThemeChanged: widget.onThemeChanged,
           ),
         ),
@@ -51,11 +65,15 @@ class _HomePageState extends State<HomePage> {
           CourseListPage(
             initialCourses: widget.initialCourses,
             totalCount: widget.totalCount,
+            onScheduleChanged: () {
+              setState(() => _scheduleVersion++);
+            },
           ),
+          SchedulePage(key: ValueKey(_scheduleVersion)),
           SettingsPage(
-            key: ValueKey(widget.themeMode),
-            themeMode: widget.themeMode,
-            onThemeChanged: widget.onThemeChanged,
+            key: ValueKey(_themeMode),
+            themeMode: _themeMode,
+            onThemeChanged: _handleThemeChanged,
             onLogout: _handleLogout,
           ),
         ],
@@ -71,6 +89,11 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.school_outlined),
             selectedIcon: Icon(Icons.school),
             label: 'Courses',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.calendar_today_outlined),
+            selectedIcon: Icon(Icons.calendar_today),
+            label: 'Schedule',
           ),
           NavigationDestination(
             icon: Icon(Icons.settings_outlined),
