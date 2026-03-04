@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/onboarding_page.dart';
 import 'pages/loading_page.dart';
@@ -8,15 +9,10 @@ const _themeKey = 'theme_mode';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
   final authService = AuthService();
-  bool loggedIn = false;
-
-  if (await authService.isSessionValid()) {
-    final account = await authService.signInSilently();
-    loggedIn = account != null;
-    if (!loggedIn) await authService.clearSession();
-  }
+  final loggedIn = authService.getCurrentUser() != null;
 
   final prefs = await SharedPreferences.getInstance();
   final savedTheme = prefs.getString(_themeKey);
@@ -86,5 +82,4 @@ class _MainAppState extends State<MainApp> {
             ),
     );
   }
-
 }
