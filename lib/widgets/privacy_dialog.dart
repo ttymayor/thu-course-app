@@ -1,47 +1,35 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 
 void showPrivacyDialog(BuildContext context) {
+  final l10n = AppLocalizations.of(context)!;
+
   showDialog(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text('Privacy Policy'),
-      content: const SingleChildScrollView(
+      title: Text(l10n.privacyPolicy),
+      content: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'THU Course App respects your privacy. This policy explains how we handle your information.\n',
-            ),
-            _SectionTitle('Authentication'),
-            Text(
-              'We use Firebase Authentication with Google Sign-In. Only your email address is used to verify that you are a Tunghai University member (@go.thu.edu.tw or @thu.edu.tw). We do not store your Google password.\n',
-            ),
-            _SectionTitle('Data Collection'),
-            Text(
-              'We collect minimal data necessary for the app to function:\n'
-              '- Email address (for THU domain verification)\n'
-              '- Display name and profile photo (from your Google account)\n'
-              '- Course selections you make within the app\n',
-            ),
-            _SectionTitle('Data Storage'),
-            Text(
-              'Authentication state is managed by Firebase and stored locally on your device. Course data is fetched from university sources and cached locally.\n',
-            ),
-            _SectionTitle('Third-Party Services'),
-            Text(
-              'This app uses Google Sign-In and Firebase, which are governed by Google\'s Privacy Policy.\n',
-            ),
-            _SectionTitle('Data Deletion'),
-            Text(
-              'You can sign out at any time from Settings. This clears your local session. To delete your Firebase account data, contact the app maintainer.',
-            ),
+            Text(l10n.privacyIntro),
+            _SectionTitle(l10n.privacyAuthTitle),
+            Text(l10n.privacyAuthBody),
+            _SectionTitle(l10n.privacyDataCollectionTitle),
+            Text(l10n.privacyDataCollectionBody),
+            _SectionTitle(l10n.privacyDataStorageTitle),
+            Text(l10n.privacyDataStorageBody),
+            _SectionTitle(l10n.privacyThirdPartyTitle),
+            Text(l10n.privacyThirdPartyBody),
+            _SectionTitle(l10n.privacyDataDeletionTitle),
+            Text(l10n.privacyDataDeletionBody),
           ],
         ),
       ),
       actions: [
         FilledButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('OK'),
+          child: Text(l10n.ok),
         ),
       ],
     ),

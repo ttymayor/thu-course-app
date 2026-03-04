@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../models/schedule.dart';
 import '../services/schedule_service.dart';
 
@@ -13,7 +14,6 @@ class _SchedulePageState extends State<SchedulePage> {
   late Future<ScheduleService> _scheduleServiceFuture;
   List<ScheduleCourse> _courses = [];
 
-  static const List<String> _dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   static const List<String> _periodLabels = [
     'A', '1', '2', '3', '4', 'B', '5', '6', '7', '8', '9', '10', '11', '12', '13'
   ];
@@ -48,13 +48,18 @@ class _SchedulePageState extends State<SchedulePage> {
     });
   }
 
+  List<String> _getDayLabels(AppLocalizations l10n) {
+    return [l10n.mon, l10n.tue, l10n.wed, l10n.thu, l10n.fri, l10n.sat];
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Schedule'),
+        title: Text(l10n.schedule),
         centerTitle: true,
       ),
       body: _courses.isEmpty
@@ -69,14 +74,14 @@ class _SchedulePageState extends State<SchedulePage> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'No courses added',
+                    l10n.noCoursesAdded,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Add courses from the Courses tab',
+                    l10n.addCoursesFromTab,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
@@ -95,8 +100,10 @@ class _SchedulePageState extends State<SchedulePage> {
 
   Widget _buildTimetable(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
+    final dayLabels = _getDayLabels(l10n);
     final int rows = _periodLabels.length;
-    final int cols = _dayLabels.length;
+    final int cols = dayLabels.length;
     final double totalHeight = _headerHeight + rows * _rowHeight;
     final double totalWidth = _periodColWidth + cols * _dayColWidth;
 
@@ -107,7 +114,7 @@ class _SchedulePageState extends State<SchedulePage> {
         height: totalHeight,
         child: Stack(
           children: [
-            _buildGrid(rows, cols, colorScheme),
+            _buildGrid(rows, cols, colorScheme, dayLabels),
             ..._buildCourseBlocks(colorScheme),
           ],
         ),
@@ -115,7 +122,7 @@ class _SchedulePageState extends State<SchedulePage> {
     );
   }
 
-  Widget _buildGrid(int rows, int cols, ColorScheme colorScheme) {
+  Widget _buildGrid(int rows, int cols, ColorScheme colorScheme, List<String> dayLabels) {
     final border = BorderSide(color: colorScheme.outlineVariant);
 
     return Column(
@@ -131,7 +138,7 @@ class _SchedulePageState extends State<SchedulePage> {
                 border: Border(bottom: border, right: border),
               ),
             ),
-            ..._dayLabels.map(
+            ...dayLabels.map(
               (day) => Container(
                 width: _dayColWidth,
                 height: _headerHeight,

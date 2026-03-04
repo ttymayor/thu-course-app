@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../widgets/privacy_dialog.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -16,42 +17,43 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(l10n.settings),
         centerTitle: true,
       ),
       body: ListView(
         children: [
-          const _SectionHeader(title: 'Appearance'),
+          _SectionHeader(title: l10n.appearance),
           ListTile(
             leading: const Icon(Icons.brightness_5),
-            title: const Text('Theme'),
-            subtitle: Text(_getThemeModeText(themeMode)),
+            title: Text(l10n.theme),
+            subtitle: Text(_getThemeModeText(themeMode, l10n)),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => _showThemeDialog(context),
+            onTap: () => _showThemeDialog(context, l10n),
           ),
           ListTile(
             leading: Icon(Icons.logout, color: colorScheme.error),
-            title: Text('Logout', style: TextStyle(color: colorScheme.error)),
-            onTap: () => _showLogoutDialog(context),
+            title: Text(l10n.logout, style: TextStyle(color: colorScheme.error)),
+            onTap: () => _showLogoutDialog(context, l10n),
           ),
           const Divider(),
-          const _SectionHeader(title: 'About'),
+          _SectionHeader(title: l10n.about),
           ListTile(
             leading: const Icon(Icons.info_outline),
-            title: const Text('App Version'),
+            title: Text(l10n.appVersion),
             subtitle: const Text('0.4.0'),
           ),
           ListTile(
             leading: const Icon(Icons.school),
-            title: const Text('THU Course App'),
-            subtitle: const Text('Manage your courses easily'),
+            title: Text(l10n.appTitle),
+            subtitle: Text(l10n.manageCoursesEasily),
           ),
           ListTile(
             leading: const Icon(Icons.privacy_tip_outlined),
-            title: const Text('Privacy Policy'),
+            title: Text(l10n.privacyPolicy),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => showPrivacyDialog(context),
           ),
@@ -60,27 +62,27 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  String _getThemeModeText(ThemeMode mode) {
+  String _getThemeModeText(ThemeMode mode, AppLocalizations l10n) {
     switch (mode) {
       case ThemeMode.light:
-        return 'Light';
+        return l10n.themeLight;
       case ThemeMode.dark:
-        return 'Dark';
+        return l10n.themeDark;
       case ThemeMode.system:
-        return 'System';
+        return l10n.themeSystem;
     }
   }
 
-  void _showThemeDialog(BuildContext context) {
+  void _showThemeDialog(BuildContext context, AppLocalizations l10n) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Choose Theme'),
+        title: Text(l10n.chooseTheme),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             RadioListTile<ThemeMode>(
-              title: const Text('System'),
+              title: Text(l10n.themeSystem),
               value: ThemeMode.system,
               groupValue: themeMode,
               onChanged: (value) {
@@ -89,7 +91,7 @@ class SettingsPage extends StatelessWidget {
               },
             ),
             RadioListTile<ThemeMode>(
-              title: const Text('Light'),
+              title: Text(l10n.themeLight),
               value: ThemeMode.light,
               groupValue: themeMode,
               onChanged: (value) {
@@ -98,7 +100,7 @@ class SettingsPage extends StatelessWidget {
               },
             ),
             RadioListTile<ThemeMode>(
-              title: const Text('Dark'),
+              title: Text(l10n.themeDark),
               value: ThemeMode.dark,
               groupValue: themeMode,
               onChanged: (value) {
@@ -112,23 +114,23 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  void _showLogoutDialog(BuildContext context) {
+  void _showLogoutDialog(BuildContext context, AppLocalizations l10n) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Logout'),
-        content: const Text('Are you sure you want to logout?'),
+        title: Text(l10n.logout),
+        content: Text(l10n.logoutConfirm),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           FilledButton(
             onPressed: () async {
               Navigator.pop(context);
               await onLogout();
             },
-            child: const Text('Logout'),
+            child: Text(l10n.logout),
           ),
         ],
       ),

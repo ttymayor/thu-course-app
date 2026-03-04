@@ -1,6 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+class ThuEmailOnlyException implements Exception {
+  const ThuEmailOnlyException();
+}
+
 class AuthService {
   static final AuthService _instance = AuthService._internal();
   factory AuthService() => _instance;
@@ -22,7 +26,7 @@ class AuthService {
       final domain = googleUser.email.split('@').last;
       if (!_allowedDomains.contains(domain)) {
         await _googleSignIn.signOut();
-        throw Exception('僅限東海大學信箱（@go.thu.edu.tw 或 @thu.edu.tw）登入');
+        throw const ThuEmailOnlyException();
       }
 
       final googleAuth = await googleUser.authentication;
