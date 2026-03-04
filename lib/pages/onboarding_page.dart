@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
+import '../widgets/privacy_dialog.dart';
 import 'loading_page.dart';
 
 class OnboardingPage extends StatefulWidget {
@@ -101,7 +102,13 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 48),
+              const SizedBox(height: 16),
+              TextButton.icon(
+                onPressed: () => showPrivacyDialog(context),
+                icon: const Icon(Icons.info_outline, size: 18),
+                label: const Text('Privacy Policy'),
+              ),
+              const SizedBox(height: 24),
             ],
           ),
         ),

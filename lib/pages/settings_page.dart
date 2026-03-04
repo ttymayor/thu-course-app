@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/privacy_dialog.dart';
 
 class SettingsPage extends StatelessWidget {
   final ThemeMode themeMode;
@@ -47,6 +48,12 @@ class SettingsPage extends StatelessWidget {
             leading: const Icon(Icons.school),
             title: const Text('THU Course App'),
             subtitle: const Text('Manage your courses easily'),
+          ),
+          ListTile(
+            leading: const Icon(Icons.privacy_tip_outlined),
+            title: const Text('Privacy Policy'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => showPrivacyDialog(context),
           ),
         ],
       ),
