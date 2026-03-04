@@ -44,7 +44,7 @@ class SettingsPage extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.info_outline),
             title: Text(l10n.appVersion),
-            subtitle: const Text('0.5.0'),
+            subtitle: const Text('0.6.0'),
           ),
           ListTile(
             leading: const Icon(Icons.school),
