@@ -27,7 +27,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
       final user = await _authService.signInWithGoogle();
 
       if (user != null && mounted) {
-        await _authService.saveSession();
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (context) => LoadingPage(

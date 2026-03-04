@@ -52,3 +52,6 @@ app.*.map.json
 # Signing credentials
 key.properties
 *.jks
+
+# Firebase config
+android/app/google-services.json
