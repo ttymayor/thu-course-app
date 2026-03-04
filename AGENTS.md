@@ -5,7 +5,7 @@
 - `lib/models/` holds data models (`course.dart`, `schedule.dart`).
 - `lib/services/` contains API/auth/cache/business services.
 - `lib/pages/` contains UI screens (onboarding, schedule, settings, etc.).
-- `android/` and `ios/` contain platform-specific build config.
+- `android/` contain platform-specific build config.
 - Root scripts: `run_dev.ps1` (local run) and `build_prod.ps1` (release APK).
 - Environment files: `.env.dev` and `.env.prod` provide `--dart-define` values.
 
