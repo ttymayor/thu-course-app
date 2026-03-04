@@ -1,0 +1,100 @@
+{
+  "@@locale": "en",
+
+  "appTitle": "THU Course App",
+  "manageCoursesEasily": "Manage your courses easily",
+  "signingIn": "Signing in...",
+  "signInWithGoogle": "Sign in with Google",
+  "privacyPolicy": "Privacy Policy",
+
+  "courses": "Courses",
+  "schedule": "Schedule",
+  "settings": "Settings",
+
+  "loadingCourses": "Loading courses...",
+  "failedToLoadCourses": "Failed to load courses",
+  "retry": "Retry",
+
+  "searchCourses": "Search courses...",
+  "showingCourses": "Showing {count} / {total} courses",
+  "@showingCourses": {
+    "placeholders": {
+      "count": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "pageOf": "Page {num} of {total}",
+  "@pageOf": {
+    "placeholders": {
+      "num": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+
+  "teachingGoal": "Teaching Goal",
+  "teachers": "Teachers",
+  "credits": "Credits",
+  "targetClass": "Target Class",
+  "targetGrade": "Target Grade",
+  "grading": "Grading",
+  "selectionRecords": "Selection Records",
+  "latestSelection": "Latest: {enrolled} enrolled, {remaining} remaining",
+  "@latestSelection": {
+    "placeholders": {
+      "enrolled": {"type": "int"},
+      "remaining": {"type": "int"}
+    }
+  },
+
+  "removeFromSchedule": "Remove from Schedule",
+  "addToSchedule": "Add to Schedule",
+  "timeConflict": "Time Conflict",
+  "addedToSchedule": "Added {name} to schedule",
+  "@addedToSchedule": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "removedFromSchedule": "Removed {name} from schedule",
+  "@removedFromSchedule": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+
+  "noCoursesAdded": "No courses added",
+  "addCoursesFromTab": "Add courses from the Courses tab",
+  "mon": "Mon",
+  "tue": "Tue",
+  "wed": "Wed",
+  "thu": "Thu",
+  "fri": "Fri",
+  "sat": "Sat",
+
+  "appearance": "Appearance",
+  "theme": "Theme",
+  "chooseTheme": "Choose Theme",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "logout": "Logout",
+  "logoutConfirm": "Are you sure you want to logout?",
+  "cancel": "Cancel",
+  "about": "About",
+  "appVersion": "App Version",
+  "ok": "OK",
+
+  "thuEmailOnly": "Only THU email addresses (@go.thu.edu.tw or @thu.edu.tw) are allowed",
+
+  "privacyIntro": "THU Course App respects your privacy. This policy explains how we handle your information.\n",
+  "privacyAuthTitle": "Authentication",
+  "privacyAuthBody": "We use Firebase Authentication with Google Sign-In. Only your email address is used to verify that you are a Tunghai University member (@go.thu.edu.tw or @thu.edu.tw). We do not store your Google password.\n",
+  "privacyDataCollectionTitle": "Data Collection",
+  "privacyDataCollectionBody": "We collect minimal data necessary for the app to function:\n- Email address (for THU domain verification)\n- Display name and profile photo (from your Google account)\n- Course selections you make within the app\n",
+  "privacyDataStorageTitle": "Data Storage",
+  "privacyDataStorageBody": "Authentication state is managed by Firebase and stored locally on your device. Course data is fetched from university sources and cached locally.\n",
+  "privacyThirdPartyTitle": "Third-Party Services",
+  "privacyThirdPartyBody": "This app uses Google Sign-In and Firebase, which are governed by Google's Privacy Policy.\n",
+  "privacyDataDeletionTitle": "Data Deletion",
+  "privacyDataDeletionBody": "You can sign out at any time from Settings. This clears your local session. To delete your Firebase account data, contact the app maintainer."
+}

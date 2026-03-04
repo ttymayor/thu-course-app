@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:loading_indicator_m3e/loading_indicator_m3e.dart';
+import '../l10n/app_localizations.dart';
 import '../services/course_api_service.dart';
 import '../models/course.dart';
 import 'home_page.dart';
@@ -65,6 +66,7 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       body: SafeArea(
@@ -80,7 +82,7 @@ class _LoadingPageState extends State<LoadingPage> {
                 ),
                 const SizedBox(height: 24),
                 Text(
-                  'Loading courses...',
+                  l10n.loadingCourses,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: colorScheme.onSurfaceVariant,
                       ),
@@ -93,7 +95,7 @@ class _LoadingPageState extends State<LoadingPage> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Failed to load courses',
+                  l10n.failedToLoadCourses,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 const SizedBox(height: 8),
@@ -116,7 +118,7 @@ class _LoadingPageState extends State<LoadingPage> {
                     _loadCourses();
                   },
                   icon: const Icon(Icons.refresh),
-                  label: const Text('Retry'),
+                  label: Text(l10n.retry),
                 ),
               ],
             ],

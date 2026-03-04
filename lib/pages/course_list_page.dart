@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../l10n/app_localizations.dart';
 import '../models/course.dart';
 import '../models/schedule.dart';
 import '../services/schedule_service.dart';
@@ -73,6 +74,7 @@ class _CourseListPageState extends State<CourseListPage> {
   }
 
   Future<void> _toggleSchedule(Course course) async {
+    final l10n = AppLocalizations.of(context)!;
     final service = await _scheduleServiceFuture;
     if (_scheduledCourseIds.contains(course.id)) {
       await service.removeCourse(course.id);
@@ -84,7 +86,7 @@ class _CourseListPageState extends State<CourseListPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Removed ${course.courseName} from schedule'),
+            content: Text(l10n.removedFromSchedule(course.courseName)),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -100,7 +102,7 @@ class _CourseListPageState extends State<CourseListPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Added ${course.courseName} to schedule'),
+            content: Text(l10n.addedToSchedule(course.courseName)),
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -141,11 +143,12 @@ class _CourseListPageState extends State<CourseListPage> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
     final paged = _pagedCourses;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Courses'),
+        title: Text(l10n.courses),
         centerTitle: true,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60),
@@ -153,7 +156,7 @@ class _CourseListPageState extends State<CourseListPage> {
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
             child: SearchBar(
               controller: _searchController,
-              hintText: 'Search courses...',
+              hintText: l10n.searchCourses,
               leading: const Icon(Icons.search),
               trailing: [
                 if (_searchController.text.isNotEmpty)
@@ -177,7 +180,7 @@ class _CourseListPageState extends State<CourseListPage> {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             color: colorScheme.surfaceContainerHighest,
             child: Text(
-              'Showing ${_filteredCourses.length} / ${widget.totalCount} courses',
+              l10n.showingCourses(_filteredCourses.length, widget.totalCount),
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
@@ -226,6 +229,8 @@ class _PaginationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
@@ -242,7 +247,7 @@ class _PaginationBar extends StatelessWidget {
             icon: const Icon(Icons.chevron_left),
           ),
           Text(
-            'Page ${currentPage + 1} of $totalPages',
+            l10n.pageOf(currentPage + 1, totalPages),
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           IconButton.outlined(
@@ -271,6 +276,7 @@ class _CourseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final l10n = AppLocalizations.of(context)!;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -308,7 +314,7 @@ class _CourseCard extends StatelessWidget {
               children: [
                 if (course.teachingGoal.isNotEmpty) ...[
                   Text(
-                    'Teaching Goal',
+                    l10n.teachingGoal,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -318,25 +324,25 @@ class _CourseCard extends StatelessWidget {
                   const SizedBox(height: 16),
                 ],
                 _InfoRow(
-                  label: 'Teachers',
+                  label: l10n.teachers,
                   value: course.teachers.join(', '),
                 ),
                 _InfoRow(
-                  label: 'Credits',
+                  label: l10n.credits,
                   value: '${course.credits1} / ${course.credits2}',
                 ),
                 _InfoRow(
-                  label: 'Target Class',
+                  label: l10n.targetClass,
                   value: course.basicInfo.targetClass,
                 ),
                 _InfoRow(
-                  label: 'Target Grade',
+                  label: l10n.targetGrade,
                   value: course.basicInfo.targetGrade,
                 ),
                 if (course.gradingItems.isNotEmpty) ...[
                   const SizedBox(height: 8),
                   Text(
-                    'Grading',
+                    l10n.grading,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -358,14 +364,17 @@ class _CourseCard extends StatelessWidget {
                 if (course.selectionRecords.isNotEmpty) ...[
                   const SizedBox(height: 8),
                   Text(
-                    'Selection Records',
+                    l10n.selectionRecords,
                     style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Latest: ${course.selectionRecords.last.enrolled} enrolled, ${course.selectionRecords.last.remaining} remaining',
+                    l10n.latestSelection(
+                      course.selectionRecords.last.enrolled,
+                      course.selectionRecords.last.remaining,
+                    ),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
@@ -376,14 +385,14 @@ class _CourseCard extends StatelessWidget {
                       ? OutlinedButton.icon(
                           onPressed: onToggleSchedule,
                           icon: const Icon(Icons.remove),
-                          label: const Text('Remove from Schedule'),
+                          label: Text(l10n.removeFromSchedule),
                         )
                       : FilledButton.icon(
                           onPressed: hasConflict ? null : onToggleSchedule,
                           icon: Icon(hasConflict ? Icons.block : Icons.add),
                           label: Text(hasConflict
-                              ? 'Time Conflict'
-                              : 'Add to Schedule'),
+                              ? l10n.timeConflict
+                              : l10n.addToSchedule),
                         ),
                 ),
               ],

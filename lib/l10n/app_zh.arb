@@ -1,0 +1,100 @@
+{
+  "@@locale": "zh",
+
+  "appTitle": "THU 選課 App",
+  "manageCoursesEasily": "輕鬆管理你的課程",
+  "signingIn": "登入中...",
+  "signInWithGoogle": "使用 Google 登入",
+  "privacyPolicy": "隱私權政策",
+
+  "courses": "課程",
+  "schedule": "課表",
+  "settings": "設定",
+
+  "loadingCourses": "載入課程中...",
+  "failedToLoadCourses": "載入課程失敗",
+  "retry": "重試",
+
+  "searchCourses": "搜尋課程...",
+  "showingCourses": "顯示 {count} / {total} 門課程",
+  "@showingCourses": {
+    "placeholders": {
+      "count": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+  "pageOf": "第 {num} / {total} 頁",
+  "@pageOf": {
+    "placeholders": {
+      "num": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+
+  "teachingGoal": "教學目標",
+  "teachers": "授課教師",
+  "credits": "學分",
+  "targetClass": "修課班級",
+  "targetGrade": "修課年級",
+  "grading": "評分方式",
+  "selectionRecords": "選課紀錄",
+  "latestSelection": "最新：已選 {enrolled} 人，剩餘 {remaining} 名",
+  "@latestSelection": {
+    "placeholders": {
+      "enrolled": {"type": "int"},
+      "remaining": {"type": "int"}
+    }
+  },
+
+  "removeFromSchedule": "從課表移除",
+  "addToSchedule": "加入課表",
+  "timeConflict": "時間衝突",
+  "addedToSchedule": "已將 {name} 加入課表",
+  "@addedToSchedule": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+  "removedFromSchedule": "已將 {name} 從課表移除",
+  "@removedFromSchedule": {
+    "placeholders": {
+      "name": {"type": "String"}
+    }
+  },
+
+  "noCoursesAdded": "尚未加入課程",
+  "addCoursesFromTab": "從「課程」分頁加入課程",
+  "mon": "一",
+  "tue": "二",
+  "wed": "三",
+  "thu": "四",
+  "fri": "五",
+  "sat": "六",
+
+  "appearance": "外觀",
+  "theme": "主題",
+  "chooseTheme": "選擇主題",
+  "themeSystem": "跟隨系統",
+  "themeLight": "淺色",
+  "themeDark": "深色",
+  "logout": "登出",
+  "logoutConfirm": "確定要登出嗎？",
+  "cancel": "取消",
+  "about": "關於",
+  "appVersion": "App 版本",
+  "ok": "確定",
+
+  "thuEmailOnly": "僅限東海大學信箱（@go.thu.edu.tw 或 @thu.edu.tw）登入",
+
+  "privacyIntro": "THU 選課 App 尊重您的隱私。本政策說明我們如何處理您的資訊。\n",
+  "privacyAuthTitle": "身份驗證",
+  "privacyAuthBody": "我們使用 Firebase Authentication 搭配 Google 登入。僅使用您的電子郵件地址來驗證您是否為東海大學成員（@go.thu.edu.tw 或 @thu.edu.tw）。我們不會儲存您的 Google 密碼。\n",
+  "privacyDataCollectionTitle": "資料蒐集",
+  "privacyDataCollectionBody": "我們僅蒐集 App 運作所需的最少資料：\n- 電子郵件地址（用於東海網域驗證）\n- 顯示名稱與大頭貼（來自您的 Google 帳戶）\n- 您在 App 內的選課紀錄\n",
+  "privacyDataStorageTitle": "資料儲存",
+  "privacyDataStorageBody": "身份驗證狀態由 Firebase 管理，並儲存在您的裝置上。課程資料從學校來源取得並在本地快取。\n",
+  "privacyThirdPartyTitle": "第三方服務",
+  "privacyThirdPartyBody": "本 App 使用 Google 登入與 Firebase，受 Google 隱私權政策規範。\n",
+  "privacyDataDeletionTitle": "資料刪除",
+  "privacyDataDeletionBody": "您可以隨時從設定中登出，這將清除您的本地工作階段。如需刪除 Firebase 帳戶資料，請聯繫 App 維護者。"
+}
