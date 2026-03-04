@@ -11,7 +11,10 @@ class AuthService {
   AuthService._internal();
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: ['email', 'profile'],
+    serverClientId: '956690934908-9f7rkmj0hi9n3sj7lb93dcltshjjs2kv.apps.googleusercontent.com',
+  );
 
   static const List<String> _allowedDomains = [
     'go.thu.edu.tw',
