@@ -7,11 +7,15 @@ import 'loading_page.dart';
 class OnboardingPage extends StatefulWidget {
   final ThemeMode themeMode;
   final ValueChanged<ThemeMode> onThemeChanged;
+  final Locale locale;
+  final ValueChanged<Locale> onLocaleChanged;
 
   const OnboardingPage({
     super.key,
     required this.themeMode,
     required this.onThemeChanged,
+    required this.locale,
+    required this.onLocaleChanged,
   });
 
   @override
@@ -34,6 +38,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
             builder: (context) => LoadingPage(
               themeMode: widget.themeMode,
               onThemeChanged: widget.onThemeChanged,
+              locale: widget.locale,
+              onLocaleChanged: widget.onLocaleChanged,
             ),
           ),
         );

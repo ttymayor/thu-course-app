@@ -127,6 +127,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get appearance => '外觀';
 
   @override
+  String get language => '語言';
+
+  @override
+  String get chooseLanguage => '選擇語言';
+
+  @override
+  String get languageZh => '中文';
+
+  @override
+  String get languageEn => 'English';
+
+  @override
   String get theme => '主題';
 
   @override
@@ -155,6 +167,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get appVersion => 'App 版本';
+
+  @override
+  String get developer => '開發者';
+
+  @override
+  String get projectSourceCode => '專案原始碼';
+
+  @override
+  String get license => '授權條款';
+
+  @override
+  String get mitLicense => 'MIT 授權條款';
 
   @override
   String get ok => '確定';
@@ -199,4 +223,64 @@ class AppLocalizationsZh extends AppLocalizations {
   @override
   String get privacyDataDeletionBody =>
       '您可以隨時從設定中登出，這將清除您的本地工作階段。如需刪除 Firebase 帳戶資料，請聯繫 App 維護者。';
+
+  @override
+  String get courseDetail => '課程詳情';
+
+  @override
+  String get swipeToAdd => '滑動加入/移除課表';
+
+  @override
+  String get swipeToAddDescription => '在課程卡片上向左滑動，快速加入或移除課表';
+
+  @override
+  String get courseListBehavior => '課程列表';
+
+  @override
+  String get removeData => '清除課表資料';
+
+  @override
+  String get removeDataConfirm => '確定要清除所有課表資料嗎？此操作無法復原。';
+
+  @override
+  String get removeDataSuccess => '已清除所有課表資料';
+
+  @override
+  String get dataManagement => '資料';
+
+  @override
+  String get allCourses => '全部';
+
+  @override
+  String get selectedCourses => '已選';
+
+  @override
+  String get noSelectedCourses => '尚未選擇任何課程';
+
+  @override
+  String get tutorial => '使用教學';
+
+  @override
+  String get swipeTutorialTitle => '滑動加入課程';
+
+  @override
+  String get swipeTutorialDescription => '將下方的卡片向左滑動，試試將課程加入課表。';
+
+  @override
+  String get swipeTutorialSuccess => '太棒了！你已經學會滑動加入課程了。';
+
+  @override
+  String get swipeTutorialReset => '再試一次';
+
+  @override
+  String get gotIt => '知道了';
+
+  @override
+  String get exampleCourse => '範例課程';
+
+  @override
+  String get exampleDepartment => '資訊工程學系';
+
+  @override
+  String get exampleClassTime => '週一 1-2';
 }

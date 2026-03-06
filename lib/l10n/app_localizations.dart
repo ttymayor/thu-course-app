@@ -314,6 +314,30 @@ abstract class AppLocalizations {
   /// **'外觀'**
   String get appearance;
 
+  /// No description provided for @language.
+  ///
+  /// In zh, this message translates to:
+  /// **'語言'**
+  String get language;
+
+  /// No description provided for @chooseLanguage.
+  ///
+  /// In zh, this message translates to:
+  /// **'選擇語言'**
+  String get chooseLanguage;
+
+  /// No description provided for @languageZh.
+  ///
+  /// In zh, this message translates to:
+  /// **'中文'**
+  String get languageZh;
+
+  /// No description provided for @languageEn.
+  ///
+  /// In zh, this message translates to:
+  /// **'English'**
+  String get languageEn;
+
   /// No description provided for @theme.
   ///
   /// In zh, this message translates to:
@@ -373,6 +397,30 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'App 版本'**
   String get appVersion;
+
+  /// No description provided for @developer.
+  ///
+  /// In zh, this message translates to:
+  /// **'開發者'**
+  String get developer;
+
+  /// No description provided for @projectSourceCode.
+  ///
+  /// In zh, this message translates to:
+  /// **'專案原始碼'**
+  String get projectSourceCode;
+
+  /// No description provided for @license.
+  ///
+  /// In zh, this message translates to:
+  /// **'授權條款'**
+  String get license;
+
+  /// No description provided for @mitLicense.
+  ///
+  /// In zh, this message translates to:
+  /// **'MIT 授權條款'**
+  String get mitLicense;
 
   /// No description provided for @ok.
   ///
@@ -451,6 +499,126 @@ abstract class AppLocalizations {
   /// In zh, this message translates to:
   /// **'您可以隨時從設定中登出，這將清除您的本地工作階段。如需刪除 Firebase 帳戶資料，請聯繫 App 維護者。'**
   String get privacyDataDeletionBody;
+
+  /// No description provided for @courseDetail.
+  ///
+  /// In zh, this message translates to:
+  /// **'課程詳情'**
+  String get courseDetail;
+
+  /// No description provided for @swipeToAdd.
+  ///
+  /// In zh, this message translates to:
+  /// **'滑動加入/移除課表'**
+  String get swipeToAdd;
+
+  /// No description provided for @swipeToAddDescription.
+  ///
+  /// In zh, this message translates to:
+  /// **'在課程卡片上向左滑動，快速加入或移除課表'**
+  String get swipeToAddDescription;
+
+  /// No description provided for @courseListBehavior.
+  ///
+  /// In zh, this message translates to:
+  /// **'課程列表'**
+  String get courseListBehavior;
+
+  /// No description provided for @removeData.
+  ///
+  /// In zh, this message translates to:
+  /// **'清除課表資料'**
+  String get removeData;
+
+  /// No description provided for @removeDataConfirm.
+  ///
+  /// In zh, this message translates to:
+  /// **'確定要清除所有課表資料嗎？此操作無法復原。'**
+  String get removeDataConfirm;
+
+  /// No description provided for @removeDataSuccess.
+  ///
+  /// In zh, this message translates to:
+  /// **'已清除所有課表資料'**
+  String get removeDataSuccess;
+
+  /// No description provided for @dataManagement.
+  ///
+  /// In zh, this message translates to:
+  /// **'資料'**
+  String get dataManagement;
+
+  /// No description provided for @allCourses.
+  ///
+  /// In zh, this message translates to:
+  /// **'全部'**
+  String get allCourses;
+
+  /// No description provided for @selectedCourses.
+  ///
+  /// In zh, this message translates to:
+  /// **'已選'**
+  String get selectedCourses;
+
+  /// No description provided for @noSelectedCourses.
+  ///
+  /// In zh, this message translates to:
+  /// **'尚未選擇任何課程'**
+  String get noSelectedCourses;
+
+  /// No description provided for @tutorial.
+  ///
+  /// In zh, this message translates to:
+  /// **'使用教學'**
+  String get tutorial;
+
+  /// No description provided for @swipeTutorialTitle.
+  ///
+  /// In zh, this message translates to:
+  /// **'滑動加入課程'**
+  String get swipeTutorialTitle;
+
+  /// No description provided for @swipeTutorialDescription.
+  ///
+  /// In zh, this message translates to:
+  /// **'將下方的卡片向左滑動，試試將課程加入課表。'**
+  String get swipeTutorialDescription;
+
+  /// No description provided for @swipeTutorialSuccess.
+  ///
+  /// In zh, this message translates to:
+  /// **'太棒了！你已經學會滑動加入課程了。'**
+  String get swipeTutorialSuccess;
+
+  /// No description provided for @swipeTutorialReset.
+  ///
+  /// In zh, this message translates to:
+  /// **'再試一次'**
+  String get swipeTutorialReset;
+
+  /// No description provided for @gotIt.
+  ///
+  /// In zh, this message translates to:
+  /// **'知道了'**
+  String get gotIt;
+
+  /// No description provided for @exampleCourse.
+  ///
+  /// In zh, this message translates to:
+  /// **'範例課程'**
+  String get exampleCourse;
+
+  /// No description provided for @exampleDepartment.
+  ///
+  /// In zh, this message translates to:
+  /// **'資訊工程學系'**
+  String get exampleDepartment;
+
+  /// No description provided for @exampleClassTime.
+  ///
+  /// In zh, this message translates to:
+  /// **'週一 1-2'**
+  String get exampleClassTime;
 }
 
 class _AppLocalizationsDelegate

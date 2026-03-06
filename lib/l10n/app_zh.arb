@@ -72,6 +72,10 @@
   "sat": "六",
 
   "appearance": "外觀",
+  "language": "語言",
+  "chooseLanguage": "選擇語言",
+  "languageZh": "中文",
+  "languageEn": "English",
   "theme": "主題",
   "chooseTheme": "選擇主題",
   "themeSystem": "跟隨系統",
@@ -82,6 +86,10 @@
   "cancel": "取消",
   "about": "關於",
   "appVersion": "App 版本",
+  "developer": "開發者",
+  "projectSourceCode": "專案原始碼",
+  "license": "授權條款",
+  "mitLicense": "MIT 授權條款",
   "ok": "確定",
 
   "thuEmailOnly": "僅限東海大學信箱（@go.thu.edu.tw 或 @thu.edu.tw）登入",
@@ -96,5 +104,29 @@
   "privacyThirdPartyTitle": "第三方服務",
   "privacyThirdPartyBody": "本 App 使用 Google 登入與 Firebase，受 Google 隱私權政策規範。\n",
   "privacyDataDeletionTitle": "資料刪除",
-  "privacyDataDeletionBody": "您可以隨時從設定中登出，這將清除您的本地工作階段。如需刪除 Firebase 帳戶資料，請聯繫 App 維護者。"
+  "privacyDataDeletionBody": "您可以隨時從設定中登出，這將清除您的本地工作階段。如需刪除 Firebase 帳戶資料，請聯繫 App 維護者。",
+
+  "courseDetail": "課程詳情",
+  "swipeToAdd": "滑動加入/移除課表",
+  "swipeToAddDescription": "在課程卡片上向左滑動，快速加入或移除課表",
+  "courseListBehavior": "課程列表",
+
+  "removeData": "清除課表資料",
+  "removeDataConfirm": "確定要清除所有課表資料嗎？此操作無法復原。",
+  "removeDataSuccess": "已清除所有課表資料",
+  "dataManagement": "資料",
+
+  "allCourses": "全部",
+  "selectedCourses": "已選",
+  "noSelectedCourses": "尚未選擇任何課程",
+
+  "tutorial": "使用教學",
+  "swipeTutorialTitle": "滑動加入課程",
+  "swipeTutorialDescription": "將下方的卡片向左滑動，試試將課程加入課表。",
+  "swipeTutorialSuccess": "太棒了！你已經學會滑動加入課程了。",
+  "swipeTutorialReset": "再試一次",
+  "gotIt": "知道了",
+  "exampleCourse": "範例課程",
+  "exampleDepartment": "資訊工程學系",
+  "exampleClassTime": "週一 1-2"
 }

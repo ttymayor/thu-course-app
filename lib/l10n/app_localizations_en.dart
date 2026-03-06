@@ -127,6 +127,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appearance => 'Appearance';
 
   @override
+  String get language => 'Language';
+
+  @override
+  String get chooseLanguage => 'Choose Language';
+
+  @override
+  String get languageZh => '中文';
+
+  @override
+  String get languageEn => 'English';
+
+  @override
   String get theme => 'Theme';
 
   @override
@@ -155,6 +167,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get appVersion => 'App Version';
+
+  @override
+  String get developer => 'Developer';
+
+  @override
+  String get projectSourceCode => 'Project Source Code';
+
+  @override
+  String get license => 'License';
+
+  @override
+  String get mitLicense => 'MIT License';
 
   @override
   String get ok => 'OK';
@@ -201,4 +225,68 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get privacyDataDeletionBody =>
       'You can sign out at any time from Settings. This clears your local session. To delete your Firebase account data, contact the app maintainer.';
+
+  @override
+  String get courseDetail => 'Course Detail';
+
+  @override
+  String get swipeToAdd => 'Swipe to Add/Remove';
+
+  @override
+  String get swipeToAddDescription =>
+      'Left swipe on course tiles to quickly add or remove from schedule';
+
+  @override
+  String get courseListBehavior => 'Course List';
+
+  @override
+  String get removeData => 'Remove Schedule Data';
+
+  @override
+  String get removeDataConfirm =>
+      'Are you sure you want to remove all schedule data? This action cannot be undone.';
+
+  @override
+  String get removeDataSuccess => 'All schedule data has been removed';
+
+  @override
+  String get dataManagement => 'Data';
+
+  @override
+  String get allCourses => 'All';
+
+  @override
+  String get selectedCourses => 'Selected';
+
+  @override
+  String get noSelectedCourses => 'No courses selected yet';
+
+  @override
+  String get tutorial => 'Tutorial';
+
+  @override
+  String get swipeTutorialTitle => 'Swipe to Add Course';
+
+  @override
+  String get swipeTutorialDescription =>
+      'Swipe the card below to the left to try adding a course to your schedule.';
+
+  @override
+  String get swipeTutorialSuccess =>
+      'Great! You\'ve learned how to swipe to add courses.';
+
+  @override
+  String get swipeTutorialReset => 'Try Again';
+
+  @override
+  String get gotIt => 'Got It';
+
+  @override
+  String get exampleCourse => 'Example Course';
+
+  @override
+  String get exampleDepartment => 'Computer Science';
+
+  @override
+  String get exampleClassTime => 'Mon 1-2';
 }

@@ -8,11 +8,15 @@ import 'home_page.dart';
 class LoadingPage extends StatefulWidget {
   final ThemeMode themeMode;
   final ValueChanged<ThemeMode> onThemeChanged;
+  final Locale locale;
+  final ValueChanged<Locale> onLocaleChanged;
 
   const LoadingPage({
     super.key,
     required this.themeMode,
     required this.onThemeChanged,
+    required this.locale,
+    required this.onLocaleChanged,
   });
 
   @override
@@ -57,6 +61,8 @@ class _LoadingPageState extends State<LoadingPage> {
             totalCount: _coursesResponse!.count,
             themeMode: widget.themeMode,
             onThemeChanged: widget.onThemeChanged,
+            locale: widget.locale,
+            onLocaleChanged: widget.onLocaleChanged,
           ),
         ),
       );
